@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, Check, ChevronRight, Copy, Eye, LogOut, MousePointer2, Move, Redo2, RotateCcw, Trash2, Undo2, X } from 'lucide-react';
+import { Check, ChevronRight, Copy, Eye, FolderKanban, LockKeyhole, MousePointer2, Move, Plus, Redo2, Trash2, Undo2, X } from 'lucide-react';
 import { initialElements, materials } from './data';
 import type { FenceElement, Material, Orientation } from './types';
 
@@ -8,15 +8,16 @@ const uid=()=>crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
 
 export function App(){
   const [entered,setEntered]=useState(false);
-  const [code,setCode]=useState(''); const [pin,setPin]=useState(''); const [error,setError]=useState('');
-  if(!entered) return <Login code={code} pin={pin} setCode={setCode} setPin={setPin} error={error} onEnter={()=>{if(code.toUpperCase()==='KOVAC-001'&&pin==='1234')setEntered(true);else setError('Proverite šifru radionice i PIN.');}}/>;
-  return <Workshop onExit={()=>{setEntered(false);setPin('');}}/>;
+  if(!entered) return <WorkspaceHome onEnter={()=>setEntered(true)}/>;
+  return <Workshop onExit={()=>setEntered(false)}/>;
 }
 
 function Brand(){return <div className="brand"><span className="logo">K</span><div><b>KOVAČNICA</b><small>digitalna radionica</small></div></div>}
 
-function Login({code,pin,setCode,setPin,error,onEnter}:{code:string;pin:string;setCode:(v:string)=>void;setPin:(v:string)=>void;error:string;onEnter:()=>void}){
- return <main className="login"><div className="loginGlow"/><form className="loginCard" onSubmit={e=>{e.preventDefault();onEnter()}}><Brand/><div className="loginCopy"><h1>Dobro došli u radionicu</h1><p>Digitalna radionica za projektovanje ograda</p></div><label>Šifra radionice<input autoFocus value={code} onChange={e=>setCode(e.target.value)} placeholder="npr. KOVAC-001"/></label><label>Pristupni PIN<input value={pin} onChange={e=>setPin(e.target.value)} type="password" placeholder="Unesite PIN"/></label>{error&&<div className="error">{error}</div>}<button className="primary wide">Otvori radionicu <ChevronRight size={18}/></button><small className="secure">Zaštićen pristup vašem radnom prostoru</small></form></main>
+function WorkspaceHome({onEnter}:{onEnter:()=>void}){
+ const [active,setActive]=useState(false); const [pin,setPin]=useState(''); const [error,setError]=useState('');
+ const open=()=>{if(pin==='1234')onEnter();else setError('Pogrešan PIN. Pokušajte ponovo.')};
+ return <main className="workspaceHome"><nav className="homeNav"><Brand/><div><span>RADNI PROSTORI</span><button className="homeAvatar">VM</button></div></nav><section className="homeContent"><div className="homeIntro"><div><small>VAŠE RADIONICE</small><h1>Dobro došli u KOVAČNICU</h1><p>Izaberite radionicu ili dodajte novi radni prostor.</p></div><div className="workspaceCount"><b>1</b><span>aktivna radionica</span></div></div><div className="workspaceGrid"><button className="workspaceCard populated" onClick={()=>{setActive(true);setError('')}}><div className="cardTop"><span className="workspaceIcon">K</span><span className="statusDot">AKTIVNA</span></div><div className="cardCopy"><small>RADIONICA</small><h2>KOVAC</h2><p>Vladimir Mitić</p></div><div className="cardCode"><LockKeyhole size={14}/><span>ŠIFRA</span><b>KOVAC-001</b></div><div className="cardFoot"><span>Otvori radionicu</span><ChevronRight size={18}/></div></button>{Array.from({length:5},(_,i)=><button className="workspaceCard addCard" key={i}><span className="addIcon"><Plus size={24}/></span><b>Dodaj radionicu</b><p>Kreirajte novi prostor za projekte</p></button>)}</div><div className="homeNote"><FolderKanban size={17}/><span>Svaka radionica ima zasebne projekte, materijale i podešavanja.</span></div></section>{active&&<div className="modalBack" onMouseDown={()=>setActive(false)}><form className="accessModal" onMouseDown={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();open()}}><button type="button" className="close" onClick={()=>setActive(false)}><X/></button><span className="workspaceIcon large">K</span><small>ULAZ U RADIONICU</small><h2>KOVAC</h2><p>Vladimir Mitić · KOVAC-001</p><label>Pristupni PIN<input autoFocus value={pin} onChange={e=>setPin(e.target.value)} type="password" placeholder="Unesite PIN"/></label>{error&&<div className="error">{error}</div>}<button className="primary wide">Otvori radionicu <ChevronRight size={18}/></button></form></div>}</main>
 }
 
 function Workshop({onExit}:{onExit:()=>void}){
