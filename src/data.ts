@@ -42,3 +42,15 @@ const cScrolls:OrnamentCatalogItem[]=cDimensions.map(([width,height],index)=>({c
 const sDimensions=[[100,275],[100,275],[120,265],[120,265],[140,325],[140,325],[105,410],[105,410],[115,395],[115,395],[130,380],[130,380],[110,300],[110,330],[110,330],[245,490],[245,490],[90,250],[90,250],[275,775]];
 const sScrolls:OrnamentCatalogItem[]=sDimensions.map(([width,height],index)=>({code:`SV-${String(index+1).padStart(2,'0')}`,name:`S-voluta ${index+1}`,widthMm:width,heightMm:height,pricePerPiece:Number((5.2+index*.42).toFixed(2)),style:'s-scroll',variant:index+1}));
 ornaments.push(...spearheads,...baskets,...cScrolls,...sScrolls);
+
+type ExtraSpec=[string,string,number,number,OrnamentStyle];
+const extraSpecs:ExtraSpec[]=[
+ ['K22/3','Panel s košarom',230,1000,'catalog-panel'],['K25/3','Panel s dvostrukim volutama',275,1000,'catalog-panel'],['K26/7','Galvanizirani centralni panel',200,650,'catalog-panel'],['49/3','Panel s tri srca',175,1000,'catalog-panel'],
+ ['48/1','Šipka s jednom košarom',55,1000,'decorated-bar'],['48/2','Šipka s dvije košare',65,1050,'decorated-bar'],['K24/5','Velika spiralna S-šipka',175,1000,'catalog-panel'],['K52/2','Panel s listovima',235,1000,'catalog-panel'],['K25/4','Lepezasti panel',200,1000,'catalog-panel'],['52/F/1','Dvostruki lepezasti panel',250,1000,'catalog-panel'],
+ ['K26/24A','Panel s cvjetovima',260,1000,'catalog-panel'],['64/F/2','Šipka s dvostrukim listom',90,1000,'decorated-bar'],['64/F/4','Šipka s vrhom lista',70,1000,'decorated-bar'],['K22/1','Panel dvostruki okvir',220,1000,'catalog-panel'],['K9/48','Masivna balustrada 35',90,1035,'decorated-bar'],['K9/46','Balustrada kvadratna 14',70,1000,'decorated-bar'],['64/I/3R','Okrugla ukrasna šipka 14',55,1000,'decorated-bar'],['64/G/1','Panel s kopljem',225,900,'catalog-panel'],
+ ['K9/44','Šipka s ovalnim čvorom 12',70,1000,'decorated-bar'],['K9/45','Šipka s ovalnim čvorom 16',80,1000,'decorated-bar'],['K15/6A','Valovita šipka kovana',200,1000,'wave-bar'],['K14/1A','Valovita šipka 200',200,1000,'wave-bar'],
+ ['K25/2','Panel sa šest voluta',300,1000,'catalog-panel'],['K23/1A','Panel sa srcima i rombom',165,1000,'catalog-panel'],['K23/3A','Panel pravokutni s rombom',175,1000,'catalog-panel'],['113/2','Šipka s velikim rombom',90,1100,'decorated-bar'],['K26/4','Široki simetrični panel',270,1000,'catalog-panel'],['K24/4','Velika asimetrična voluta',240,1000,'catalog-panel'],['64/F/9','Uvijena šipka s medaljonom',110,900,'decorated-bar'],['64/I/2R','Okrugla šipka s dva vrha',45,1000,'decorated-bar'],['KL/321','Veliki lira panel',250,1100,'catalog-panel'],
+ ['112/6','Kvadratna šipka 30 s prstenom',50,1200,'decorated-bar'],['112/7','Kvadratna šipka 25 s čvorom',48,1200,'decorated-bar'],['105/2','Okrugla šipka 14 s čvorom',42,1000,'decorated-bar'],['105/1','Okrugla šipka 14 dvostruki čvor',42,1000,'decorated-bar'],
+];
+const extraCatalog:OrnamentCatalogItem[]=extraSpecs.map(([code,name,widthMm,heightMm,style],index)=>({code:`KT-${code}`,name,widthMm,heightMm,pricePerPiece:Number((12.5+(index%11)*1.15).toFixed(2)),style,variant:index+1}));
+ornaments.push(...extraCatalog);
