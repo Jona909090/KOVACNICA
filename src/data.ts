@@ -13,7 +13,7 @@ export const initialElements:FenceElement[]=[
   {id:'frame-right',type:'profile',materialCode:p.code,name:p.name,size:p.size,lengthMm:1800,orientation:'vertical',positionX:2960,positionY:0,pricePerMeter:p.pricePerMeter},
 ];
 
-export interface OrnamentCatalogItem{code:string;name:string;widthMm:number;heightMm:number;pricePerPiece:number;style:OrnamentStyle;variant:number}
+export interface OrnamentCatalogItem{code:string;name:string;widthMm:number;heightMm:number;pricePerPiece:number;style:OrnamentStyle;variant:number;assetPath?:string}
 const ornamentFamilies:{style:OrnamentStyle;name:string;width:number;height:number;price:number}[]=[
  {style:'scroll-cross',name:'Volute',width:220,height:560,price:12.5},
  {style:'diamond-scroll',name:'Romb i volute',width:240,height:620,price:15.8},
@@ -52,5 +52,5 @@ const extraSpecs:ExtraSpec[]=[
  ['K25/2','Panel sa šest voluta',300,1000,'catalog-panel'],['K23/1A','Panel sa srcima i rombom',165,1000,'catalog-panel'],['K23/3A','Panel pravokutni s rombom',175,1000,'catalog-panel'],['113/2','Šipka s velikim rombom',90,1100,'decorated-bar'],['K26/4','Široki simetrični panel',270,1000,'catalog-panel'],['K24/4','Velika asimetrična voluta',240,1000,'catalog-panel'],['64/F/9','Uvijena šipka s medaljonom',110,900,'decorated-bar'],['64/I/2R','Okrugla šipka s dva vrha',45,1000,'decorated-bar'],['KL/321','Veliki lira panel',250,1100,'catalog-panel'],
  ['112/6','Kvadratna šipka 30 s prstenom',50,1200,'decorated-bar'],['112/7','Kvadratna šipka 25 s čvorom',48,1200,'decorated-bar'],['105/2','Okrugla šipka 14 s čvorom',42,1000,'decorated-bar'],['105/1','Okrugla šipka 14 dvostruki čvor',42,1000,'decorated-bar'],
 ];
-const extraCatalog:OrnamentCatalogItem[]=extraSpecs.map(([code,name,widthMm,heightMm,style],index)=>({code:`KT-${code}`,name,widthMm,heightMm,pricePerPiece:Number((12.5+(index%11)*1.15).toFixed(2)),style,variant:index+1}));
+const extraCatalog:OrnamentCatalogItem[]=extraSpecs.map(([code,name,widthMm,heightMm,style],index)=>({code:`KT-${code}`,name,widthMm,heightMm,pricePerPiece:Number((12.5+(index%11)*1.15).toFixed(2)),style,variant:index+1,assetPath:`${import.meta.env.BASE_URL}catalog/kt-${String(index+1).padStart(2,'0')}.png`}));
 ornaments.push(...extraCatalog);

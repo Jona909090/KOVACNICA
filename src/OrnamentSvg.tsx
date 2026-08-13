@@ -1,9 +1,12 @@
 import type { OrnamentStyle } from './types';
 
-export function OrnamentSvg({style,variant=1,horizontal=false}: {style:OrnamentStyle;variant?:number;horizontal?:boolean}){
+export function OrnamentSvg({style,variant=1,horizontal=false,assetPath}: {style:OrnamentStyle;variant?:number;horizontal?:boolean;assetPath?:string}){
  const common={fill:'none',stroke:'currentColor',strokeWidth:7,strokeLinecap:'round' as const,strokeLinejoin:'round' as const};
+ const catalogAsset=assetPath??(['catalog-panel','decorated-bar','wave-bar'].includes(style)?`${import.meta.env.BASE_URL}catalog/kt-${String(variant).padStart(2,'0')}.png`:undefined);
  return <svg className="ornamentSvg" viewBox={horizontal?'0 0 700 300':'0 0 300 700'} preserveAspectRatio="none" aria-hidden="true">
   <g transform={horizontal?'translate(700 0) rotate(90)':undefined} {...common}>
+   {catalogAsset&&<image href={catalogAsset} x="0" y="0" width="300" height="700" preserveAspectRatio="none"/>}
+   {!catalogAsset&&<>
    {style==='scroll-cross'&&<><path d="M150 40V660"/><path d="M150 210C105 160 45 178 62 235C72 266 112 255 104 227"/><path d="M150 210C195 160 255 178 238 235C228 266 188 255 196 227"/><path d="M150 390C92 330 32 365 54 430C68 471 114 451 104 415"/><path d="M150 390C208 330 268 365 246 430C232 471 186 451 196 415"/><circle cx="150" cy="300" r="18"/></>}
    {style==='diamond-scroll'&&<><path d="M150 30V670"/><path d="M150 170L90 280L150 390L210 280Z"/><path d="M90 280C48 238 30 291 59 310"/><path d="M210 280C252 238 270 291 241 310"/><path d="M150 390C105 435 70 413 77 380"/><path d="M150 390C195 435 230 413 223 380"/><circle cx="150" cy="170" r="15"/><circle cx="150" cy="390" r="15"/></>}
    {style==='ring-panel'&&<><path d="M150 30V120M150 580V670"/><path d="M108 120H192Q225 120 225 155V545Q225 580 192 580H108Q75 580 75 545V155Q75 120 108 120Z"/><circle cx="150" cy="350" r="62"/><path d="M75 175Q45 195 75 220M225 480Q255 505 225 530"/></>}
@@ -25,6 +28,7 @@ export function OrnamentSvg({style,variant=1,horizontal=false}: {style:OrnamentS
    {variant===3&&<><path d="M150 285L112 350L150 415L188 350Z"/><circle cx="150" cy="350" r="12"/></>}
    {variant===4&&<><circle cx="150" cy="260" r="35"/><circle cx="150" cy="455" r="35"/><path d="M115 260H70M185 260H230M115 455H70M185 455H230"/></>}
    {variant===5&&<><path d="M108 285Q60 245 55 305Q82 322 112 305ZM192 285Q240 245 245 305Q218 322 188 305ZM105 455Q60 420 58 478Q85 494 113 474ZM195 455Q240 420 242 478Q215 494 187 474Z" fill="currentColor"/></>}
+   </>}
   </g>
  </svg>
 }
