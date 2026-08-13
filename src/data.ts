@@ -13,12 +13,18 @@ export const initialElements:FenceElement[]=[
   {id:'frame-right',type:'profile',materialCode:p.code,name:p.name,size:p.size,lengthMm:1800,orientation:'vertical',positionX:2960,positionY:0,pricePerMeter:p.pricePerMeter},
 ];
 
-export interface OrnamentCatalogItem{code:string;name:string;widthMm:number;heightMm:number;pricePerPiece:number;style:OrnamentStyle}
-export const ornaments:OrnamentCatalogItem[]=[
- {code:'OR-001',name:'Četiri volute',widthMm:220,heightMm:520,pricePerPiece:12.5,style:'scroll-cross'},
- {code:'OR-002',name:'Romb sa volutama',widthMm:240,heightMm:600,pricePerPiece:15.8,style:'diamond-scroll'},
- {code:'OR-003',name:'Panel sa prstenom',widthMm:200,heightMm:650,pricePerPiece:14.2,style:'ring-panel'},
- {code:'OR-004',name:'Dvostruko srce',widthMm:260,heightMm:620,pricePerPiece:17.5,style:'heart-scroll'},
- {code:'OR-005',name:'Dvostruka S-voluta',widthMm:280,heightMm:700,pricePerPiece:18.9,style:'double-s'},
- {code:'OR-006',name:'Kovani vrh sa volutama',widthMm:230,heightMm:650,pricePerPiece:16.4,style:'spear-scroll'},
+export interface OrnamentCatalogItem{code:string;name:string;widthMm:number;heightMm:number;pricePerPiece:number;style:OrnamentStyle;variant:number}
+const ornamentFamilies:{style:OrnamentStyle;name:string;width:number;height:number;price:number}[]=[
+ {style:'scroll-cross',name:'Volute',width:220,height:560,price:12.5},
+ {style:'diamond-scroll',name:'Romb i volute',width:240,height:620,price:15.8},
+ {style:'ring-panel',name:'Panel s prstenom',width:210,height:680,price:14.2},
+ {style:'heart-scroll',name:'Srce',width:260,height:640,price:17.5},
+ {style:'double-s',name:'S-voluta',width:280,height:700,price:18.9},
+ {style:'spear-scroll',name:'Kovani vrh',width:230,height:660,price:16.4},
+ {style:'basket',name:'Kovana košara',width:190,height:650,price:19.2},
+ {style:'leaf-panel',name:'Panel s listovima',width:300,height:720,price:22.4},
+ {style:'lyre',name:'Lira',width:270,height:680,price:20.6},
+ {style:'spiral-branch',name:'Spiralna grana',width:320,height:700,price:21.8},
 ];
+const variantNames=['jednostruka','dvostruka','s rombom','s prstenovima','s listovima'];
+export const ornaments:OrnamentCatalogItem[]=ornamentFamilies.flatMap((family,familyIndex)=>Array.from({length:5},(_,variantIndex)=>{const variant=variantIndex+1;const number=familyIndex*5+variant;return {code:`OR-${String(number).padStart(3,'0')}`,name:`${family.name} — ${variantNames[variantIndex]}`,widthMm:family.width+(variantIndex%3)*20,heightMm:family.height+(variantIndex%2)*40,pricePerPiece:Number((family.price+variantIndex*1.35).toFixed(2)),style:family.style,variant}}));
