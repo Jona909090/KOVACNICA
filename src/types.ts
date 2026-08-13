@@ -1,6 +1,6 @@
 export type Orientation = 'horizontal' | 'vertical';
 export interface Material { code:string; name:string; size:string; pricePerMeter:number; shape:'square'|'rect'|'angle'|'solid' }
-export type OrnamentStyle='scroll-cross'|'diamond-scroll'|'ring-panel'|'heart-scroll'|'double-s'|'spear-scroll'|'basket'|'leaf-panel'|'lyre'|'spiral-branch';
+export type OrnamentStyle='scroll-cross'|'diamond-scroll'|'ring-panel'|'heart-scroll'|'double-s'|'spear-scroll'|'basket'|'leaf-panel'|'lyre'|'spiral-branch'|'spearhead'|'basket-piece'|'c-scroll'|'s-scroll';
 export interface FenceElement { id:string; type:'profile'|'ornament'; materialCode:string; name:string; size:string; lengthMm:number; orientation:Orientation; positionX:number; positionY:number; pricePerMeter:number; shape?:'straight'|'arc'; bendRiseMm?:number; widthMm?:number; pricePerPiece?:number; ornamentStyle?:OrnamentStyle; ornamentVariant?:number; lineThicknessMm?:number }
 
 export function developedLengthMm(element:FenceElement){
