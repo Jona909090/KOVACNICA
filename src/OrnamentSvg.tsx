@@ -2,7 +2,7 @@ import type { OrnamentStyle } from './types';
 
 export function OrnamentSvg({style,variant=1,horizontal=false}: {style:OrnamentStyle;variant?:number;horizontal?:boolean}){
  const common={fill:'none',stroke:'currentColor',strokeWidth:7,strokeLinecap:'round' as const,strokeLinejoin:'round' as const};
- return <svg className="ornamentSvg" viewBox={horizontal?'0 0 700 300':'0 0 300 700'} aria-hidden="true">
+ return <svg className="ornamentSvg" viewBox={horizontal?'0 0 700 300':'0 0 300 700'} preserveAspectRatio="none" aria-hidden="true">
   <g transform={horizontal?'translate(700 0) rotate(90)':undefined} {...common}>
    {style==='scroll-cross'&&<><path d="M150 40V660"/><path d="M150 210C105 160 45 178 62 235C72 266 112 255 104 227"/><path d="M150 210C195 160 255 178 238 235C228 266 188 255 196 227"/><path d="M150 390C92 330 32 365 54 430C68 471 114 451 104 415"/><path d="M150 390C208 330 268 365 246 430C232 471 186 451 196 415"/><circle cx="150" cy="300" r="18"/></>}
    {style==='diamond-scroll'&&<><path d="M150 30V670"/><path d="M150 170L90 280L150 390L210 280Z"/><path d="M90 280C48 238 30 291 59 310"/><path d="M210 280C252 238 270 291 241 310"/><path d="M150 390C105 435 70 413 77 380"/><path d="M150 390C195 435 230 413 223 380"/><circle cx="150" cy="170" r="15"/><circle cx="150" cy="390" r="15"/></>}
